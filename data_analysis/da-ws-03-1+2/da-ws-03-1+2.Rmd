@@ -1,0 +1,66 @@
+---
+title: "da-ws-03-2"
+author: "Hammer, Kleebauer, Balzer"
+date: "13 November 2017"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# 03-1
+
+df <- read.table("C:/Users/Public/Documents/mpg-17/hessen_holzeinschlag_1997-2014.csv", skip =4, header = TRUE, sep=";", dec=",")
+
+df <- df[-19,]
+
+setwd("C:/Users/Public/Documents/mpg-17/scripte/mpg-daten-analyse/da-ws-03-1+2")
+
+write.csv2(df, file ='hessen_holzeinschlag_1997-2014_clean.csv')
+
+# 03-2
+###Nr. 1
+
+boxplot(df[2:7],main="Holzeinschlag 1997-2014",xlab="Baumart", ylab="Einschlagsmenge")
+
+###Nr. 2
+#### Der Wertebereich der Buche reicht von etwa 1000 bis 2000, wobei der Mittelwert im oberen Drittel liegt, sie ist der dritthäufigst gefällte Baum.
+#### Die Fichte wird etwa 1500- 4000 mal gefällt, der Mittelwert liegt knapp über 2000, sie wird von den 5 Holzarten am häufigsten gefällt, auffällig ist der Extremwert bei 6500.
+###Nr. 3
+
+Jahr <- df$FWJ
+
+Eiche <- cbind(df$Buche, df$Eiche)
+
+Buntholz <- cbind(df$Buche, df$Buntholz)
+
+Fichte <- cbind(df$Buche, df$Fichte)
+
+Kiefer <- cbind(df$Buche, df$Kiefer)
+
+
+par(mfrow = c(2,2))
+
+matplot(Jahr, Eiche, pch=16,main="Buche und Eiche", ylab="Einschlagsmenge", type="p", col=c("black","red"))
+matlines(Jahr, Eiche)
+legend("right", c("Buche","Eiche"),bg="transparent", pch=16, col=c("black","red"), cex=0.7)  
+
+matplot(Jahr, Buntholz, pch=16,main="Buche und Buntholz", ylab="Einschlagsmenge", type="p", col=c("black","orange"))
+matlines(Jahr, Buntholz)
+legend("right", c("Buche","Buntholz"), bg="transparent", pch=16, col=c("black","orange"), cex=0.7)
+
+matplot(Jahr, Fichte, pch=16,main="Buche und Fichte", ylab="Einschlagsmenge", type="p", col=c("black","green"))
+matlines(Jahr, Fichte)
+legend("right", c("Buche","Fichte"), bg="transparent", pch=16, col=c("black","green"), cex=0.7)
+
+matplot(Jahr, Kiefer, pch=16,main="Buche und Kiefer", ylab="Einschlagsmenge", type="p", col=c("black","purple"))
+matlines(Jahr, Kiefer)
+legend("right", c("Buche","Kiefer"), bg="transparent", pch=16, col=c("black","purple"), cex=0.7)
+
+###Nr. 4
+
+#### Buche + Eiche: Während die Eiche im untersuchten Zeitraum nie über 500mal gefällt wird, wird die Buche doppelt bist vier mal so häufig gefällt.
+#### Buche + Buntholz: Buntholz wird nur in den ersten drei Jahren des Zeitraums in sehr geringen Mengen geschlagen.
+#### Buche + Fichte: Buche und Fichte werden annähernd oft geschlagen, die im Zeitraum von 2003 bis 2010 deutlich häufiger mit einem Höhepunkt im Jahr 2007.
+#### Buche + Kiefer: Die Buche wird häufiger als die Kiefer geschlagen, allerdings weisen die Kurven die gleichen Steigungen und Senkungen auf.
+
